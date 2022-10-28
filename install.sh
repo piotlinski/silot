@@ -1,14 +1,5 @@
 set -e
 
-TF_VERSION_UPPER_BOUND=1.14
-VALID_TF_VERSION=$(python -c "import tensorflow as tf; from pkg_resources import parse_version; print(parse_version(tf.VERSION) < parse_version('$TF_VERSION_UPPER_BOUND'))")
-
-if [ $VALID_TF_VERSION != "True" ]; then
-  TF_VERSION=$(python -c "import tensorflow as tf; print(tf.VERSION)")
-  echo "tensorflow version $TF_VERSION too new, must be < $TF_VERSION_UPPER_BOUND. See README.md for explanation."
-  exit
-fi
-
 GIT_BRANCH=$(git branch | sed -n '/\* /s///p')
 echo "*** git branch for silot is <"$GIT_BRANCH">."
 
@@ -50,3 +41,5 @@ pip install -e .
 cd  ../
 pip install -r requirements.txt
 pip install -e .
+
+pip install tensorflow_probability==0.6
